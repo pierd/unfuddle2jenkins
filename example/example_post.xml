@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changeset>
+  <author-id type="integer"> </author-id>
+  <created-at type="datetime"> </created-at>
+  <id type="integer"> </id>
+  <message> </message>
+  <repository-id type="integer">1</repository-id>
+  <revision> </revision>
+</changeset>
