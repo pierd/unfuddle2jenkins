@@ -13,7 +13,7 @@ def get_jenkins_url_for_repository_id(repository_id):
     global unfuddle2jenkins_map
     if unfuddle2jenkins_map is None:
         unfuddle2jenkins_map = eval(os.environ[MAP_ENV_VAR_NAME])
-    return unfuddle2jenkins_map[repository_id]
+    return unfuddle2jenkins_map.get(repository_id)
 
 
 def get_repository_id_from_xml(chargeset_xml):
@@ -28,9 +28,12 @@ def application(env, start_response):
         posted_data = env['wsgi.input'].read(1024)
         repository_id = get_repository_id_from_xml(posted_data)
         jenkins_url = get_jenkins_url_for_repository_id(repository_id)
-        url_resource = urllib.urlopen(jenkins_url)
-        url_resource.read()
-        url_resource.close()
+        if jenkins_url:
+            url_resource = urllib.urlopen(jenkins_url)
+            url_resource.read()
+            url_resource.close()
+        else:
+            log.warning('No Jenkins url for repository id %d' % repository_id)
     except Exception:
         log.exception('Something went wrong')
     return "done"
