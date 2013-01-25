@@ -32,6 +32,5 @@ def application(env, start_response):
         url_resource.read()
         url_resource.close()
     except Exception:
-        print 'dupa'
         log.exception('Something went wrong')
     return "done"
